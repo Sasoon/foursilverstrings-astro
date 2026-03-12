@@ -5,7 +5,7 @@ const currentPath = Astro.url.pathname;
 ---
 
 <header
-  class="container-standard py-5 flex flex-wrap md:flex-nowrap items-center justify-between"
+  class="container-standard h-20 flex items-center justify-between relative"
   role="banner"
 >
   <div class="w-full md:w-auto flex items-center justify-between">
@@ -21,16 +21,18 @@ const currentPath = Astro.url.pathname;
     <button
       type="button"
       id="menu-toggle"
-      class="md:hidden text-overline text-text p-2"
-      aria-label="Menu"
+      class="md:hidden flex flex-col justify-center items-center w-8 h-8 gap-1.5 p-1 z-50 focus:outline-none group"
+      aria-label="Toggle Menu"
+      aria-expanded="false"
     >
-      Menu
+      <span class="block w-6 border-t-2 border-text transition-transform duration-300 ease-in-out origin-center group-[[aria-expanded=true]]:translate-y-[4px] group-[[aria-expanded=true]]:rotate-45"></span>
+      <span class="block w-6 border-t-2 border-text transition-transform duration-300 ease-in-out origin-center group-[[aria-expanded=true]]:-translate-y-[4px] group-[[aria-expanded=true]]:-rotate-45"></span>
     </button>
   </div>
 
   <nav
     id="menu"
-    class="hidden md:flex absolute md:static top-full left-0 w-full md:w-auto bg-bg-base md:bg-transparent border-b border-border md:border-none p-6 md:p-0 z-40"
+    class="absolute md:static top-full left-0 w-full md:w-auto bg-bg-base/95 backdrop-blur-md md:bg-transparent border-b border-border md:border-none p-6 md:p-0 z-40 origin-top flex flex-col md:flex-row invisible opacity-0 -translate-y-4 md:visible md:opacity-100 md:translate-y-0 menu-mobile-open:visible menu-mobile-open:opacity-100 menu-mobile-open:translate-y-0"
   >
     <ul
       class="flex flex-col md:flex-row items-start md:items-center gap-6 md:gap-10 text-sm font-body tracking-wide text-text-muted"
@@ -64,16 +66,49 @@ const currentPath = Astro.url.pathname;
   </nav>
 </header>
 
+<style>
+  /* Use a data attribute class for mobile menu toggling */
+  #menu.menu-mobile-open {
+    visibility: visible;
+    opacity: 1;
+    transform: translateY(0);
+  }
+</style>
+
 <script>
   function initNav() {
     const toggle = document.getElementById("menu-toggle");
     const menu = document.getElementById("menu");
+
     if (toggle && menu) {
-      toggle.addEventListener("click", () => {
-        menu.classList.toggle("hidden");
-        toggle.textContent = menu.classList.contains("hidden")
-          ? "Menu"
-          : "Close";
+      // Remove old listener if re-initializing on astro:page-load
+      const newToggle = toggle.cloneNode(true) as HTMLButtonElement;
+      toggle.parentNode?.replaceChild(newToggle, toggle);
+      
+      const newMenu = document.getElementById("menu")!;
+
+      newToggle.addEventListener("click", () => {
+        // Only add transitions on actual interaction to avoid resize flashes
+        if (!newMenu.classList.contains("transition-all")) {
+          newMenu.classList.add("transition-all", "duration-500", "ease-in-out");
+        }
+        
+        const isExpanded = newToggle.getAttribute("aria-expanded") === "true";
+        newToggle.setAttribute("aria-expanded", (!isExpanded).toString());
+        newMenu.classList.toggle("menu-mobile-open");
+      });
+      
+      // Close menu safely on resize without destroying desktop Tailwind classes
+      window.addEventListener("resize", () => {
+        if (window.innerWidth >= 768) {
+             // Strip transition so it doesn't cross-fade into desktop view
+             newMenu.classList.remove("transition-all", "duration-500", "ease-in-out");
+             
+             if (newToggle.getAttribute("aria-expanded") === "true") {
+                 newToggle.setAttribute("aria-expanded", "false");
+                 newMenu.classList.remove("menu-mobile-open");
+             }
+        }
       });
     }
   }
