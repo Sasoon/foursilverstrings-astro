@@ -26,7 +26,7 @@ const showHeader = title && title !== "Four Silver Strings" && Astro.url.pathnam
     
     <main id="main-content" class="flex-grow">
       {showHeader && (
-        <header class="pt-24 pb-16 container-standard">
+        <header class="pt-24 md:pt-32 pb-16 container-standard">
           <div class={`${maxWidth} mx-auto`}>
             <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading text-text mb-6">
               {title}
