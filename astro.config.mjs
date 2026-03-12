@@ -1,13 +1,9 @@
 import { defineConfig } from "astro/config";
+import tailwindcss from "@tailwindcss/vite";
 
-import tailwind from "@astrojs/tailwind";
-
-// https://astro.build/config
 export default defineConfig({
-  integrations: [
-    tailwind({
-      config: { applyBaseStyles: false, path: "./tailwind.config.cjs" },
-    }),
-  ],
+  vite: {
+    plugins: [tailwindcss()],
+  },
   site: "https://www.foursilverstrings.com.au",
 });

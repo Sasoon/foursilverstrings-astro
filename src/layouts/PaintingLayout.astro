@@ -1,425 +1,253 @@
 ---
 import DefaultLayout from "./DefaultLayout.astro";
-const { content } = Astro.props;
+const { frontmatter } = Astro.props;
 
-let [
-  frame1,
-  frame2,
-  frame3,
-  frame4,
-  frame5,
-  frame6,
-  sm,
-  md,
-  lg,
-  price1,
-  price2,
-  price3,
-] = [
-  content.paper_frame1_label,
-  content.paper_frame2_label,
-  content.thin_frame1_label,
-  content.thin_frame2_label,
-  content.thick_frame1_label,
-  content.thick_frame2_label,
-  content.price1_label,
-  content.price2_label,
-  content.price3_label,
-  content.price1,
-  content.price2,
-  content.price3,
+const images = [
+  frontmatter.image1,
+  frontmatter.image2,
+  frontmatter.image3,
+  frontmatter.image4,
+  frontmatter.image5,
+  frontmatter.image6,
+  frontmatter.image7,
+  frontmatter.image8,
+].filter(Boolean);
+
+const sizes = [
+  { key: "sm", label: frontmatter.price1_label, price: frontmatter.price1 },
+  { key: "md", label: frontmatter.price2_label, price: frontmatter.price2 },
+  { key: "lg", label: frontmatter.price3_label, price: frontmatter.price3 },
 ];
 
-const smOptions = {
-  "data-item-custom1-options": `${frame3}[+20]|${frame4}[+20]|${frame5}[+30]|${frame6}[+30]`,
-};
+const frames = [
+  { label: frontmatter.thin_frame1_label, surcharge: { sm: 20, md: 30, lg: 40 } },
+  { label: frontmatter.thin_frame2_label, surcharge: { sm: 20, md: 30, lg: 40 } },
+  { label: frontmatter.thick_frame1_label, surcharge: { sm: 30, md: 40, lg: 50 } },
+  { label: frontmatter.thick_frame2_label, surcharge: { sm: 30, md: 40, lg: 50 } },
+];
 
-const mdOptions = {
-  "data-item-custom1-options": `${frame3}[+30]|${frame4}[+30]|${frame5}[+40]|${frame6}[+40]`,
-};
-
-const lgOptions = {
-  "data-item-custom1-options": `${frame3}[+40]|${frame4}[+40]|${frame5}[+50]|${frame6}[+50]`,
-};
+const initialPrice = sizes[1].price + frames[0].surcharge.md;
 ---
 
-<DefaultLayout title={content.title}>
-  <!-- This is the individual painting page config -->
-  <div
-    class="painting-container lg:flex lg:flex-row lg:space-x-8 pb-16 mx-auto"
-  >
-    <div class="painting-detail-image flex-1">
-      <div
-        class="fotorama not-prose"
-        data-nav="thumbs"
-        data-allowfullscreen="false"
-        data-fit="cover"
-        data-keyboard="true"
-        data-loop="true"
-        data-transition="crossfade"
-        data-ratio="600/800"
-      >
-        <img
-          src={content.image1 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image2 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image3 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image4 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image5 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image6 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image7 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-        <img
-          src={content.image8 +
-            "-/resize/420x/-/quality/lightest/-/format/webp/-/progressive/yes/"}
-          alt={content.title + "painting image"}
-        />
-      </div>
-    </div>
-    <!------------------------->
-    <!-- Painting Definition -->
-    <!------------------------->
+<DefaultLayout title={frontmatter.title}>
+  <style>
+    main > div.container-standard { padding-left: 0; padding-right: 0; max-width: none; }
+  </style>
 
-    <div
-      class="flex-2 painting-detail px-4 pt-6 sm:px-6 md:px-8 lg:pt-0 pb-6 font-muli"
-    >
-      <div class="text-container mb-4 text-center lg:text-left">
-        <span class="description">{content.description}</span>
-        <p>
-          <i class="fa fa-info-circle" aria-hidden="true"></i> For more information
-          on shipping, returns and painting details check our
-          <a class="text-accent-yellow" href="/faq">FAQs.</a>
-        </p>
+  <div class="px-6 md:px-12 lg:px-24 pb-32 pt-12">
+    
+    <div class="flex flex-col lg:flex-row gap-16 lg:gap-24 items-start">
+      
+      <!-- Gallery Column -->
+      <div class="w-full lg:w-[60%] lg:sticky lg:top-32">
+        <div class="bg-white p-4 md:p-6 border border-border mb-8">
+          <div class="painting-gallery flex overflow-x-auto snap-x snap-mandatory gap-6 scroll-smooth" id="gallery">
+            {
+              images.map((img: string, i: number) => (
+                <div class="w-full shrink-0 snap-center flex items-center justify-center relative bg-bg-alt">
+                  <img
+                    src={img + "-/resize/1600x/-/quality/smart/-/format/webp/"}
+                    alt={`${frontmatter.title} plate ${i + 1}`}
+                    class="w-full h-auto max-h-[80vh] object-cover"
+                    transition:name={i === 0 ? `painting-${frontmatter.identifier}` : undefined}
+                  />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+        
+        <!-- Thumbnails Dock -->
+        {images.length > 1 && (
+          <div class="flex gap-4 overflow-x-auto pb-4" id="thumbnails">
+            {images.map((img: string, i: number) => (
+              <button
+                type="button"
+                class={`shrink-0 w-20 h-20 overflow-hidden border border-border cursor-pointer transition-all duration-300 thumbnail-btn ${i === 0 ? 'opacity-100 ring-1 ring-text ring-offset-2 ring-offset-bg-base' : 'opacity-50 hover:opacity-100'}`}
+                data-index={i}
+              >
+                <img
+                  src={img + "-/resize/200x200/-/quality/smart/-/format/webp/"}
+                  alt={`Thumbnail ${i + 1}`}
+                  class="w-full h-full object-cover"
+                />
+              </button>
+            ))}
+          </div>
+        )}
       </div>
 
-      <!-- Size -->
-      <form>
-        <div class="size-container flex mb-4">
-          <select id="size" class="size-selector">
-            <option value="sm">{sm}</option>
-            <option selected value="md">{md}</option>
-            <option value="lg">{lg}</option>
-          </select>
+      <!-- Details Column -->
+      <div class="w-full lg:w-[40%]">
+        
+        <div class="mb-16">
+          <nav class="flex items-center text-overline text-text-muted mb-6 space-x-3">
+            <a href="/paintings" class="hover:text-accent transition-colors">Exhibition</a>
+            <span class="w-4 h-px bg-border"></span>
+            <span class="text-accent">{frontmatter.title}</span>
+          </nav>
+          <h1 class="text-5xl md:text-6xl font-heading mb-8 leading-tight">{frontmatter.title}</h1>
+          <div class="w-16 h-px bg-border mb-8"></div>
+          <p class="font-body text-sm md:text-base text-text-muted leading-loose font-light">
+            {frontmatter.description}
+          </p>
         </div>
 
-        <div class="frame-quantity-container mb-4 flex">
-          <!-- Frame -->
-          <div class="frame-container w-5/6 mr-1">
-            <!-- Small frame -->
-            <select class="frame-selector sm required" required>
-              <!-- <option value="" selected disabled hidden>Choose a frame</option> -->
-              <!-- <option disabled data-price="10" value={ frame1 }>
-                { frame1 }: +$10
-              </option>
-              <option disabled data-price="10" value={ frame2 }>
-                { frame2 }: +$10
-              </option> -->
-              <option data-price="20" value={frame3}>
-                {frame3}: +$20
-              </option>
-              <option data-price="20" value={frame4}>
-                {frame4}: +$20
-              </option>
-              <option data-price="30" value={frame5}>
-                {frame5}: +$30
-              </option>
-              <option data-price="30" value={frame6}>
-                {frame6}: +$30
-              </option>
-            </select>
-            <!-- Medium frame -->
-            <select class="frame-selector md required">
-              <!-- <option value="" selected disabled hidden>Choose a frame</option> -->
-              <!-- <option disabled data-price="20" value={ frame1 }>
-                { frame1 }: +$20
-              </option>
-              <option disabled data-price="20" value={ frame2 }>
-                { frame2 }: +$20
-              </option> -->
-              <option data-price="30" value={frame3}>
-                {frame3}: +$30
-              </option>
-              <option data-price="30" value={frame4}>
-                {frame4}: +$30
-              </option>
-              <option data-price="40" value={frame5}>
-                {frame5}: +$40
-              </option>
-              <option data-price="40" value={frame6}>
-                {frame6}: +$40
-              </option>
-            </select>
-            <!-- Large frame -->
-            <select class="frame-selector lg required">
-              <!-- <option value="" selected disabled hidden>Choose a frame</option> -->
-              <!-- <option disabled data-price="30" value={ frame1 }>
-                { frame1 }: +$30
-              </option>
-              <option disabled data-price="30" value={ frame2 }>
-                { frame2 }: +$30
-              </option> -->
-              <option data-price="40" value={frame3}>
-                {frame3}: +$40
-              </option>
-              <option data-price="40" value={frame4}>
-                {frame4}: +$40
-              </option>
-              <option data-price="50" value={frame5}>
-                {frame5}: +$50
-              </option>
-              <option data-price="50" value={frame6}>
-                {frame6}: +$50
-              </option>
-            </select>
+        <div class="bg-white border border-border p-8 md:p-12 space-y-12">
+          
+          <!-- Size -->
+          <div class="space-y-4">
+            <label class="block text-overline text-text-muted">Dimension</label>
+            <div class="flex border border-border" id="size-selector">
+              {sizes.map((size, i) => (
+                <button
+                  type="button"
+                  class={`flex-1 py-4 text-[10px] font-semibold uppercase tracking-[0.2em] border-r border-border last:border-r-0 transition-all duration-300 ${i === 1 ? 'bg-text text-bg-base' : 'bg-transparent text-text hover:bg-bg-alt'}`}
+                  data-size={size.key}
+                  data-price={size.price}
+                >
+                  {size.label}
+                </button>
+              ))}
+            </div>
           </div>
+
+          <!-- Frame -->
+          <div class="space-y-4 relative">
+            <label class="block text-overline text-text-muted">Mounting</label>
+            <div class="relative">
+              <select
+                id="frame-selector"
+                class="w-full p-5 bg-transparent border border-border text-xs font-semibold uppercase tracking-widest text-text appearance-none focus:outline-none focus:border-text cursor-pointer"
+              >
+                {frames.map((frame) => (
+                  <option value={frame.label} data-surcharge-sm={frame.surcharge.sm} data-surcharge-md={frame.surcharge.md} data-surcharge-lg={frame.surcharge.lg}>
+                    {frame.label}
+                  </option>
+                ))}
+              </select>
+              <div class="absolute inset-y-0 right-5 flex items-center pointer-events-none text-text-muted">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+              </div>
+            </div>
+          </div>
+
           <!-- Quantity -->
-          <div class="quantity-container w-1/6">
-            <label for={content.identifier + "-qty"} hidden>Quantity:</label>
+          <div class="space-y-4">
+            <label class="block text-overline text-text-muted">Units</label>
             <input
               type="number"
-              id={content.identifier + "-qty"}
-              class="qty bg-accent-grey p-2 w-full rounded-sm cursor-pointer;"
+              id="qty"
+              class="w-full p-5 bg-transparent border border-border text-lg font-semibold text-center focus:outline-none focus:border-text"
               min="1"
               value="1"
             />
           </div>
+
+          <!-- Total & Action -->
+          <div class="pt-8 border-t border-border mt-12">
+            <div class="flex justify-between items-baseline mb-10">
+              <span class="text-overline text-text-muted">Total</span>
+              <span class="text-4xl font-heading" id="price-display">${initialPrice}</span>
+            </div>
+            
+            <button type="button" class="btn-primary w-full" id="add-to-cart" disabled>
+              Acquire Piece
+            </button>
+            <p class="text-center text-xs text-accent mt-6 font-medium tracking-wide">Acquisition unavailable at this time.</p>
+          </div>
+          
         </div>
-
-        <!-- Small buy button -->
-        <button
-          type="submit"
-          class="buy-button buy-button--small snipcart-add-item"
-          data-item-quantity="1"
-          data-item-stackable="never"
-          data-item-weight="2500"
-          data-item-length="40"
-          data-item-width="30"
-          data-item-height="10"
-          data-item-id={price1}
-          data-item-name={content.title}
-          data-item-price={price1}
-          data-item-image={content.image}
-          data-item-description={content.description}
-          data-item-custom1-name="Frame"
-          {...smOptions}
-        >
-          Add to cart
-          <span class="price">${price1}</span>
-        </button>
-
-        <!-- Medium buy button -->
-        <button
-          class="buy-button buy-button--medium snipcart-add-item"
-          data-item-quantity="1"
-          data-item-stackable="never"
-          data-item-weight="3000"
-          data-item-length="50"
-          data-item-width="40"
-          data-item-height="10"
-          data-item-id={price2}
-          data-item-name={content.title}
-          data-item-price={price2}
-          data-item-image={content.image}
-          data-item-description={content.description}
-          data-item-custom1-name="Frame"
-          data-item-custom1-required="true"
-          {...mdOptions}
-        >
-          Add to cart
-          <span class="price">${price2}</span>
-        </button>
-
-        <!-- Large buy button -->
-        <button
-          class="buy-button buy-button--large snipcart-add-item"
-          data-item-quantity="1"
-          data-item-stackable="never"
-          data-item-weight="4500"
-          data-item-length="70"
-          data-item-width="50"
-          data-item-height="10"
-          data-item-id={price3}
-          data-item-name={content.title}
-          data-item-price={price3}
-          data-item-image={content.image}
-          data-item-description={content.description}
-          data-item-custom1-name="Frame"
-          data-item-custom1-required="true"
-          {...lgOptions}
-        >
-          Add to cart
-          <span class="price">${price3}</span>
-        </button>
-      </form>
+      </div>
     </div>
   </div>
 
-  <script define:vars={{ frame1, frame2, frame3, frame4, frame5, frame6 }}>
-    // Cart JS
-    // buttons
-    var sm = $(".buy-button--small");
-    var md = $(".buy-button--medium");
-    var lg = $(".buy-button--large");
-    var btn = $(".buy-button");
-
-    // frame selectors
-    var smFrame = $(".frame-selector.sm");
-    var mdFrame = $(".frame-selector.md");
-    var lgFrame = $(".frame-selector.lg");
-    var frameSelector = $(".frame-selector");
-
-    // default to medium size
-    btn.hide();
-    frameSelector.hide();
-    md.show();
-    mdFrame.show();
-
-    // default pricing (medium + paper frame)
-    var priceText = $(".price");
-    var price = parseInt($(".buy-button:visible").data("item-price"));
-
-    // price calculator
-    function priceCalc() {
-      sizeHandler();
-      frameHandler();
-      priceText.text("$" + parseInt($(".qty").val()) * price);
+  <style>
+    .painting-gallery::-webkit-scrollbar {
+      display: none;
     }
+    .painting-gallery {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+    }
+  </style>
 
-    // global handler
-    $("select").on("change", function () {
-      priceCalc();
-    });
+  <script>
+    function initPaintingPage() {
+      const sizeButtons = document.querySelectorAll<HTMLButtonElement>("#size-selector button");
+      const frameSelector = document.querySelector<HTMLSelectElement>("#frame-selector");
+      const qtyInput = document.querySelector<HTMLInputElement>("#qty");
+      const priceDisplay = document.querySelector<HTMLSpanElement>("#price-display");
+      const gallery = document.querySelector<HTMLElement>("#gallery");
+      const thumbnails = document.querySelectorAll<HTMLButtonElement>(".thumbnail-btn");
 
-    $(".qty").change(function () {
-      var qty = parseInt($(".qty").val());
-      $(".buy-button:visible").attr("data-item-quantity", qty);
-      priceText.text("$" + qty * price);
-    });
+      if (!sizeButtons.length || !frameSelector || !qtyInput || !priceDisplay) return;
 
-    // size handler
-    function sizeHandler() {
-      // get size value
-      var size = $(".size-selector")[0].selectedOptions[0].value;
-      // hide all buttons
-      btn.hide();
-      frameSelector.hide();
-      // price modifier + show relevant buy button
-      switch (size) {
-        case "sm":
-          sm.show();
-          smFrame.show();
-          price = parseInt($(".buy-button:visible").data("item-price"));
-          break;
-        case "md":
-          md.show();
-          mdFrame.show();
-          price = parseInt($(".buy-button:visible").data("item-price"));
-          break;
-        case "lg":
-          lg.show();
-          lgFrame.show();
-          price = parseInt($(".buy-button:visible").data("item-price"));
-          break;
-        default:
-          price = parseInt($(".buy-button:visible").data("item-price"));
+      function getSelectedSize(): string {
+        const btn = document.querySelector<HTMLButtonElement>("#size-selector button.bg-text");
+        return btn?.dataset.size || "md";
       }
-      btn.attr("data-item-quantity", 1);
-      $(".qty").val(1);
-    }
 
-    // frame handler
-    function frameHandler() {
-      // get frame value
-      var frame = $(".frame-selector:visible")[0].selectedOptions[0].value;
-      var framePrice = $(".frame-selector:visible")[0].selectedOptions[0]
-        .dataset.price;
-      // assign frame to buy button
-      $(".buy-button:visible").attr("data-item-custom1-value", frame);
-      // frame price modifier
-      price =
-        parseInt($(".buy-button:visible").data("item-price")) +
-        parseInt(framePrice);
-    }
+      function getBasePrice(): number {
+        const btn = document.querySelector<HTMLButtonElement>("#size-selector button.bg-text");
+        return parseInt(btn?.dataset.price || "0");
+      }
 
-    // run price calc on load
-    priceCalc();
+      function getFrameSurcharge(): number {
+        const opt = frameSelector!.selectedOptions[0];
+        const size = getSelectedSize();
+        const key = "surcharge" + size.charAt(0).toUpperCase() + size.slice(1);
+        return parseInt(opt?.dataset[key] || "0");
+      }
 
-    //////////
-    // Main.JS
-    //////////
+      function updatePrice() {
+        const qtyInputVal = parseInt(qtyInput!.value);
+        const qty = isNaN(qtyInputVal) || qtyInputVal < 1 ? 1 : qtyInputVal;
+        const total = (getBasePrice() + getFrameSurcharge()) * qty;
+        priceDisplay!.textContent = "$" + total;
+      }
 
-    function ReplaceSelectWithButtons(selectField) {
-      // get the basics
-      var selectValue = selectField.val();
-      var selectId = selectField.attr("id");
-
-      // get all options and create buttons
-      $(selectField)
-        .find("option")
-        .each(function () {
-          if ($(this).val()) {
-            var btn = $(
-              '<div data-value="' +
-                $(this).val() +
-                '" data-target="' +
-                selectId +
-                '" class="selectbtn">' +
-                "<span>" +
-                $(this).text() +
-                "</span>" +
-                "</div>"
-            );
-            if ($(this).val() == selectValue) {
-              btn.addClass("selected");
-            }
-            btn.insertBefore(selectField);
-          }
+      sizeButtons.forEach((btn) => {
+        btn.addEventListener("click", () => {
+          sizeButtons.forEach((b) => {
+            b.classList.remove("bg-text", "text-bg-base");
+            b.classList.add("bg-transparent", "text-text");
+          });
+          btn.classList.remove("bg-transparent", "text-text");
+          btn.classList.add("bg-text", "text-bg-base");
+          qtyInput!.value = "1";
+          updatePrice();
         });
-      // hide the select field
-      selectField.hide();
-
-      // map click event to buttons
-      $(document).on("click", ".selectbtn", function () {
-        var target = $(this).data("target");
-        $('.selectbtn[data-target="' + target + '"]').removeClass("selected");
-        $(this).addClass("selected");
-
-        // deselect everything, select the selected :)
-        var selectorAll = "#" + target + " option";
-        $(selectorAll).removeAttr("selected");
-        var selectorSingle =
-          "#" + target + ' option[value="' + $(this).data("value") + '"]';
-        $(selectorSingle).attr("selected", "selected");
-        $(selectorSingle).change();
       });
+
+      frameSelector.addEventListener("change", updatePrice);
+      qtyInput.addEventListener("change", updatePrice);
+
+      if (gallery && thumbnails.length) {
+        thumbnails.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const index = parseInt(btn.dataset.index || "0");
+            const imgs = gallery.querySelectorAll(".snap-center");
+            if (imgs[index]) {
+              imgs[index].scrollIntoView({
+                behavior: "smooth",
+                block: "nearest",
+                inline: "center",
+              });
+            }
+            thumbnails.forEach((t) => {
+              t.classList.remove("opacity-100", "ring-1", "ring-text", "ring-offset-2", "ring-offset-bg-base");
+              t.classList.add("opacity-50");
+            });
+            btn.classList.remove("opacity-50");
+            btn.classList.add("opacity-100", "ring-1", "ring-text", "ring-offset-2", "ring-offset-bg-base");
+          });
+        });
+      }
+
+      updatePrice();
     }
 
-    // change size select  to button
-    ReplaceSelectWithButtons($("#size"));
+    document.addEventListener("astro:page-load", initPaintingPage);
   </script>
 </DefaultLayout>

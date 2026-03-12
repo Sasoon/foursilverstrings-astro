@@ -1,30 +1,46 @@
 ---
 import "../style/base.css";
-
 import Head from "@components/Head.astro";
 import Nav from "@components/Nav.astro";
-import Header from "@components/Header.astro";
 import Footer from "@components/Footer.astro";
 import BasicScripts from "@components/BasicScripts.astro";
 
 const { title } = Astro.props;
+
+// Don't show the generic header for the homepage or individual painting layouts (they handle their own headers)
+const showHeader = title && title !== "Four Silver Strings" && Astro.url.pathname !== "/paintings" && !Astro.url.pathname.includes("/paintings/");
 ---
 
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-  <Head />
-
-  <body
-    class={"container md:max-w-4xl lg:max-w-5xl mx-auto antialiased " + title}
-  >
-    <Nav />
-    <Header title={title} />
-    <div
-      class="px-4 sm:px-6 md:px-8 font-muli prose-sm lg:prose-md xl:prose-lg"
-    >
-      <slot />
+  <Head
+    title={title
+      ? `${title} — Four Silver Strings`
+      : "Four Silver Strings"}
+  />
+  <body class="flex flex-col min-h-screen">
+    
+    <div class="sticky top-0 bg-bg-base/90 backdrop-blur-md z-50 border-b border-border/50 shadow-sm">
+      <Nav />
     </div>
+    
+    <main id="main-content" class="flex-grow">
+      {showHeader && (
+        <header class="pt-24 pb-16 container-standard">
+          <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading text-text mb-6">
+            {title}
+          </h1>
+          <div class="w-16 h-px bg-border"></div>
+        </header>
+      )}
+      
+      <div class={`${showHeader ? 'container-standard pb-32' : ''}`}>
+        <slot />
+      </div>
+    </main>
+
     <Footer />
+
     <BasicScripts />
   </body>
 </html>

@@ -1,35 +1,7 @@
 ---
-import "../style/base.css";
-
-import Head from "@components/Head.astro";
-import Nav from "@components/Nav.astro";
-import Header from "@components/Header.astro";
-import Footer from "@components/Footer.astro";
-import BasicScripts from "@components/BasicScripts.astro";
+import DefaultLayout from "./DefaultLayout.astro";
+const { frontmatter } = Astro.props;
 ---
-
-<html>
-  <Head />
-
-  <body
-    class="container md:max-w-4xl lg:max-w-5xl mx-auto antialiased {{ page.title | downcase}}"
-  >
-    <Nav />
-    <main class="main">
-      <div class="max-w-none px-4 sm:px-6 md:px-8">
-        <div
-          class="lg:flex lg:flex-row-reverse lg:space-x-8 lg:space-x-reverse pb-16 mx-auto"
-        >
-          <slot />
-        </div>
-        <div class="grid-cols-1 md:grid-cols-2 lg:grid-cols-3 md:gap-6 md:grid">
-          <!-- {% for painting in site.paintings limit:6 %}
-            {% include paintings-homepage.html %}
-          {% endfor %}    -->
-        </div>
-      </div>
-    </main>
-    <Footer />
-    <BasicScripts />
-  </body>
-</html>
+<DefaultLayout title={frontmatter?.title}>
+  <slot />
+</DefaultLayout>

@@ -1,31 +1,17 @@
 {
   "compilerOptions": {
-    "moduleResolution": "node",
-    // Enable top-level await, and other modern ESM features.
+    "moduleResolution": "bundler",
     "baseUrl": ".",
     "paths": {
-      "@components/*": [
-        "src/components/*"
-      ],
-      "@layouts/*": [
-        "src/layouts/*"
-      ],
-      "@pages/*": [
-        "src/pages/*"
-      ],
-      "@paintings/*": [
-        "src/paintings/*"
-      ]
+      "@components/*": ["src/components/*"],
+      "@layouts/*": ["src/layouts/*"],
+      "@pages/*": ["src/pages/*"],
+      "@paintings/*": ["src/paintings/*"]
     },
     "target": "ESNext",
     "module": "ESNext",
-    // Enable JSON imports.
     "resolveJsonModule": true,
-    // Enable stricter transpilation for better output.
     "isolatedModules": true,
-    // Add type definitions for our Vite runtime.
-    "types": [
-      "vite/client"
-    ]
+    "types": ["vite/client"]
   }
 }

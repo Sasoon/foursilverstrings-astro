@@ -1,44 +1,154 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
 
-@layer components {
-  .menu-btn {
-    @apply md:mb-0 md:bg-transparent md:p-0 p-4 rounded-sm mb-4 bg-accent-grey block text-accent-black cursor-pointer self-center w-full hover:text-accent-yellow ease-in-out duration-200;
-  }
-
-  .faq-container {
-    @apply cursor-pointer;
-  }
-
-  /* Below styles had to be applied this way because the HTML is dynamically generated */
-  /* frame size styles */
-  .size-container div {
-    @apply inline-block bg-accent-grey cursor-pointer text-center text-accent-black p-2 rounded-sm uppercase hover:bg-accent-yellow transition-all ease-in-out duration-200 mr-1 flex-1;
-  }
-
-  .size-container .selected {
-    @apply bg-accent-yellow;
-  }
-
-  /* frame selector styles */
-  .frame-selector {
-    @apply bg-accent-grey rounded-sm cursor-pointer p-2 w-full h-full;
-  }
-
-  /* buy button styles */
-  .buy-button {
-    @apply bg-accent-grey hover:bg-accent-yellow rounded-sm cursor-pointer p-2 w-full;
-  }
+@theme {
+  --color-bg-base: #F7F5F0;
+  --color-bg-alt: #EBE8E1;
+  --color-text: #1C1A17;
+  --color-text-muted: #736F68;
+  --color-accent: #B86A44;
+  --color-border: rgba(28, 26, 23, 0.12);
+  
+  --font-heading: "Cormorant Garamond", serif;
+  --font-body: "Jost", sans-serif;
+  
+  --radius-sm: 0.125rem;
+  --radius-md: 0.25rem;
+  --radius-lg: 0.5rem;
 }
 
-@layer base {
+body {
+  background-color: var(--color-bg-base);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
 }
 
-.fotorama > div {
-  @apply m-auto lg:m-0 px-4 sm:px-6 md:px-8;
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-heading);
+  letter-spacing: -0.01em;
+  font-weight: 400;
+  color: var(--color-text);
 }
 
-.snipcart-button-primary {
-  background: hsl(220, 70%, 22%);
+/* Base link styling */
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.prose a {
+  color: var(--color-text);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-decoration-color: var(--color-border);
+  text-underline-offset: 4px;
+  transition: all 0.3s ease;
+}
+
+.prose a:hover {
+  text-decoration-color: var(--color-text);
+}
+
+/* Link Underline Animation */
+.link-underline {
+  position: relative;
+  display: inline-block;
+  color: var(--color-text-muted);
+  transition: color 0.3s ease;
+}
+.link-underline:hover {
+  color: var(--color-text);
+}
+
+.link-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: -2px;
+  left: 0;
+  background-color: var(--color-text);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+/* Layout Utilities */
+.container-standard {
+  @apply max-w-7xl mx-auto px-6 md:px-12 lg:px-24;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply inline-flex items-center justify-center bg-transparent text-text border border-border px-8 py-4 font-body uppercase text-[11px] tracking-[0.2em] font-medium transition-all duration-500 hover:border-text hover:bg-text hover:text-bg-base cursor-pointer;
+}
+
+.btn-underline {
+  @apply relative inline-flex items-center justify-center bg-transparent text-text font-body uppercase text-[11px] tracking-[0.2em] font-medium transition-colors duration-300 pb-1 cursor-pointer;
+}
+.btn-underline::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 1px;
+  bottom: 0;
+  left: 0;
+  background-color: var(--color-text);
+  transform: scaleX(1);
+  transform-origin: left;
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+.btn-underline:hover::after {
+  transform: scaleX(0);
+  transform-origin: right;
+}
+
+/* Typography utilities */
+.text-overline {
+  font-size: 0.65rem;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  font-weight: 500;
+  color: var(--color-text-muted);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-bg-base);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-border);
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-text-muted);
+}
+
+/* Smooth Image Loading */
+img {
+  opacity: 0;
+  animation: fadeIn 1.2s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  to { opacity: 1; }
+}
+
+/* Refined Form Inputs */
+input, textarea, select {
+  @apply bg-transparent border border-border rounded-none focus:outline-none focus:ring-0 focus:border-text transition-all duration-500 font-body text-sm;
 }
