@@ -2,74 +2,114 @@
 import DefaultLayout from "../layouts/DefaultLayout.astro";
 ---
 
-<DefaultLayout title="FAQ">
-  <div class="space-y-24 max-w-4xl mx-auto">
+<DefaultLayout title="FAQ" maxWidth="max-w-5xl">
+  <div class="space-y-24 max-w-5xl mx-auto">
     
     <div class="space-y-12">
       <h2 class="text-4xl font-heading text-text border-b border-border pb-6">Artwork Information</h2>
       
-      <div class="space-y-10">
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Print Quality</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            All our artwork prints are giclée. They have the highest resolution and the sharpest detail. Giclée prints capture every shade, tone and colour of the original artwork. This is partly because standard printers use dye-based inks instead of pigment-based inks. Our prints, when stored or displayed in normal conditions, should last 100 years or more.
-          </p>
-        </div>
+      <div class="space-y-6">
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Print Quality
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              All our artwork prints are giclée. They have the highest resolution and the sharpest detail. Giclée prints capture every shade, tone and colour of the original artwork. This is partly because standard printers use dye-based inks instead of pigment-based inks. Our prints, when stored or displayed in normal conditions, should last 100 years or more.
+            </p>
+          </div>
+        </details>
 
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Do the artworks come ready to hang?</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            Yes, all artworks come ready to hang, no assembly is required upon receiving your artwork. Check the material of your wall and make sure you use the appropriate nail thickness and length.
-          </p>
-        </div>
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Do the artworks come ready to hang?
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              Yes, all artworks come ready to hang, no assembly is required upon receiving your artwork. Check the material of your wall and make sure you use the appropriate nail thickness and length.
+            </p>
+          </div>
+        </details>
 
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Artwork and frame sizes</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            The size of the artwork itself will be exactly as you selected in your order. We source our frames from different places so the dimensions of the frames may vary slightly. Frame weight: A2: ~2.5kg, A3: ~2kg, A4: ~1.5kg.
-          </p>
-        </div>
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Artwork and frame sizes
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              The size of the artwork itself will be exactly as you selected in your order. We source our frames from different places so the dimensions of the frames may vary slightly. Frame weight: A2: ~2.5kg, A3: ~2kg, A4: ~1.5kg.
+            </p>
+          </div>
+        </details>
 
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Artwork care</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            All paper-based framed artworks have a Perspex protective cover. We don't use glass for safety reasons. Keep out of direct sunlight, and use a dry microfibre cloth to gently wipe any dust off.
-          </p>
-        </div>
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Artwork care
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              All paper-based framed artworks have a Perspex protective cover. We don't use glass for safety reasons. Keep out of direct sunlight, and use a dry microfibre cloth to gently wipe any dust off.
+            </p>
+          </div>
+        </details>
       </div>
     </div>
 
     <div class="space-y-12">
       <h2 class="text-4xl font-heading text-text border-b border-border pb-6">Shipping & Returns</h2>
       
-      <div class="space-y-10">
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Shipping services</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            All items are shipped via Australia Post. Final shipping costs are shown during the checkout process, before the final payment.
-          </p>
-        </div>
+      <div class="space-y-6">
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Shipping services
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              All items are shipped via Australia Post. Final shipping costs are shown during the checkout process, before the final payment.
+            </p>
+          </div>
+        </details>
 
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Dispatch & Delivery</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            Paintings are posted within 7-10 days of placing the order. Tracking your parcel on the Australia Post website will give you the best idea of when you can expect your order to arrive.
-          </p>
-        </div>
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Dispatch & Delivery
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              Paintings are posted within 7-10 days of placing the order. Tracking your parcel on the Australia Post website will give you the best idea of when you can expect your order to arrive.
+            </p>
+          </div>
+        </details>
 
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Express options</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            Send us a message <a href="/contact" class="text-accent hover:text-text transition-colors underline underline-offset-4">here</a> and we'll organise express delivery for a fee.
-          </p>
-        </div>
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Express options
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              Send us a message <a href="/contact" class="text-accent hover:text-text transition-colors underline underline-offset-4">here</a> and we'll organise express delivery for a fee.
+            </p>
+          </div>
+        </details>
 
-        <div class="space-y-4">
-          <h3 class="text-sm font-semibold tracking-wide uppercase text-text font-body">Problems with orders</h3>
-          <p class="font-body text-text-muted leading-relaxed font-light">
-            All orders are non-exchangeable and non-refundable with the exception of a parcel arriving damaged. Please send an email within 48 hours to <a href="mailto:admin@foursilverstrings.com.au" class="text-accent hover:text-text transition-colors underline underline-offset-4 lowercase">admin@foursilverstrings.com.au</a>.
-          </p>
-        </div>
+        <details class="group border-b border-border pb-6">
+          <summary class="text-sm font-semibold tracking-wide uppercase text-text font-body cursor-pointer list-none flex justify-between items-center group-hover:text-accent transition-colors [&::-webkit-details-marker]:hidden">
+            Problems with orders
+            <span class="text-xl text-text-muted transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div class="pt-4 overflow-hidden">
+            <p class="font-body text-text-muted leading-relaxed font-light">
+              All orders are non-exchangeable and non-refundable with the exception of a parcel arriving damaged. Please send an email within 48 hours to <a href="mailto:admin@foursilverstrings.com.au" class="text-accent hover:text-text transition-colors underline underline-offset-4 lowercase">admin@foursilverstrings.com.au</a>.
+            </p>
+          </div>
+        </details>
       </div>
     </div>
     

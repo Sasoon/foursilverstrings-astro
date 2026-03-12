@@ -63,25 +63,43 @@ a {
   transition: color 0.3s ease;
 }
 .link-underline:hover {
-  color: var(--color-text);
+  color: var(--color-accent);
 }
 
 .link-underline::after {
   content: '';
   position: absolute;
   width: 100%;
-  height: 1px;
+  height: 1.5px;
   bottom: -2px;
   left: 0;
-  background-color: var(--color-text);
-  transform: scaleX(0);
+  background-color: var(--color-accent);
+  transform: scaleX(0) translateZ(0);
   transform-origin: right;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  backface-visibility: hidden;
 }
 
-.link-underline:hover::after {
-  transform: scaleX(1);
+.link-underline:hover::after,
+.link-underline.active::after {
+  transform: scaleX(1) translateZ(0);
   transform-origin: left;
+}
+
+/* FAQ Expansion Animation */
+details[open] .overflow-hidden {
+  animation: expandFAQ 0.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes expandFAQ {
+  0% {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 /* Layout Utilities */
@@ -91,11 +109,14 @@ a {
 
 /* Buttons */
 .btn-primary {
-  @apply inline-flex items-center justify-center bg-transparent text-text border border-border px-8 py-4 font-body uppercase text-[11px] tracking-[0.2em] font-medium transition-all duration-500 hover:border-text hover:bg-text hover:text-bg-base cursor-pointer;
+  @apply inline-flex items-center justify-center bg-transparent text-text border border-border px-8 py-4 font-body uppercase text-[11px] tracking-[0.2em] font-medium transition-all duration-500 hover:border-accent hover:bg-accent hover:text-bg-base cursor-pointer;
 }
 
 .btn-underline {
   @apply relative inline-flex items-center justify-center bg-transparent text-text font-body uppercase text-[11px] tracking-[0.2em] font-medium transition-colors duration-300 pb-1 cursor-pointer;
+}
+.btn-underline:hover {
+  @apply text-accent;
 }
 .btn-underline::after {
   content: '';
@@ -104,7 +125,7 @@ a {
   height: 1px;
   bottom: 0;
   left: 0;
-  background-color: var(--color-text);
+  background-color: var(--color-accent);
   transform: scaleX(1);
   transform-origin: left;
   transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);

@@ -9,39 +9,60 @@ const sortedPaintings = allPaintings.sort(
 ---
 
 <DefaultLayout title="Exhibition">
-  <div class="mb-16 md:mb-24">
-    <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading text-text mb-6">Exhibition</h1>
-    <div class="w-16 h-px bg-border"></div>
-  </div>
-
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 md:gap-x-12 gap-y-16 md:gap-y-24">
-    {
-      sortedPaintings.map((painting) => (
-        <a
-          href={painting.url}
-          class="group block no-underline"
-        >
-          <div class="bg-white p-3 md:p-4 border border-border mb-6 md:mb-8 transition-colors duration-700 group-hover:border-text/30">
-            <div class="relative overflow-hidden bg-bg-alt aspect-[4/5]">
-              <img
-                src={
-                  painting.frontmatter.image1 +
-                  "-/resize/800x/-/quality/smart/-/format/webp/"
-                }
-                alt={painting.frontmatter.title}
-                class="w-full h-full object-cover transition-transform duration-[1.5s] group-hover:scale-[1.03]"
-                transition:name={`painting-${painting.frontmatter.identifier}`}
-              />
+  <div class="container-standard pb-32">
+    <div class="space-y-32 md:space-y-48 lg:space-y-64 pt-24 md:pt-32">
+      {
+        sortedPaintings.map((painting, index) => {
+          const isEven = index % 2 === 0;
+          return (
+            <div class={`flex flex-col ${isEven ? 'lg:flex-row' : 'lg:flex-row-reverse'} items-center gap-12 lg:gap-24`}>
+              
+              <div class="w-full lg:w-1/2 flex flex-col justify-center space-y-8">
+                <div class="space-y-4">
+                  <h2 class="text-4xl md:text-5xl lg:text-6xl font-heading text-text transition-colors duration-500 hover:text-text-muted">
+                    <a href={painting.url} class="no-underline">{painting.frontmatter.title}</a>
+                  </h2>
+                  <div class="w-12 h-px bg-border"></div>
+                </div>
+                
+                {painting.frontmatter.description && (
+                  <p class="font-body text-text-muted leading-relaxed max-w-md text-base md:text-lg font-light">
+                    {painting.frontmatter.description}
+                  </p>
+                )}
+                
+                <div class="pt-6">
+                  <a href={painting.url} class="btn-underline">
+                    View Details
+                  </a>
+                </div>
+              </div>
+              
+              <div class="w-full lg:w-1/2">
+                <a
+                  href={painting.url}
+                  class="group block no-underline"
+                >
+                  <div class="bg-white p-4 md:p-6 border border-border transition-colors duration-700 group-hover:border-text/30">
+                    <div class="relative overflow-hidden bg-bg-alt aspect-[4/5]">
+                      <img
+                        src={
+                          painting.frontmatter.image1 +
+                          "-/resize/1000x/-/quality/smart/-/format/webp/"
+                        }
+                        alt={painting.frontmatter.title}
+                        class="w-full h-full object-cover transition-transform duration-[2s] group-hover:scale-[1.03]"
+                        transition:name={`painting-${painting.frontmatter.identifier}`}
+                      />
+                    </div>
+                  </div>
+                </a>
+              </div>
+              
             </div>
-          </div>
-          
-          <div class="text-center px-4">
-            <h2 class="text-2xl md:text-3xl font-heading text-text group-hover:text-text-muted transition-colors duration-500">
-              {painting.frontmatter.title}
-            </h2>
-          </div>
-        </a>
-      ))
-    }
+          );
+        })
+      }
+    </div>
   </div>
 </DefaultLayout>

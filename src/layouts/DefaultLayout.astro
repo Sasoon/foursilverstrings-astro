@@ -5,7 +5,7 @@ import Nav from "@components/Nav.astro";
 import Footer from "@components/Footer.astro";
 import BasicScripts from "@components/BasicScripts.astro";
 
-const { title } = Astro.props;
+const { title, maxWidth = "max-w-7xl" } = Astro.props;
 
 // Don't show the generic header for the homepage or individual painting layouts (they handle their own headers)
 const showHeader = title && title !== "Four Silver Strings" && Astro.url.pathname !== "/paintings" && !Astro.url.pathname.includes("/paintings/");
@@ -27,10 +27,12 @@ const showHeader = title && title !== "Four Silver Strings" && Astro.url.pathnam
     <main id="main-content" class="flex-grow">
       {showHeader && (
         <header class="pt-24 pb-16 container-standard">
-          <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading text-text mb-6">
-            {title}
-          </h1>
-          <div class="w-16 h-px bg-border"></div>
+          <div class={`${maxWidth} mx-auto`}>
+            <h1 class="text-5xl md:text-6xl lg:text-7xl font-heading text-text mb-6">
+              {title}
+            </h1>
+            <div class="w-16 h-px bg-border"></div>
+          </div>
         </header>
       )}
       
