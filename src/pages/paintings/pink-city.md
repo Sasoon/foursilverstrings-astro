@@ -16,6 +16,7 @@ thin_frame1_label: Thin white frame + white internal border
 thin_frame2_label: Thin black frame + white internal border
 thick_frame1_label: Thick white frame + white internal border
 thick_frame2_label: Thick black frame + white internal border
+spotify: "https://open.spotify.com/album/0HMsmYvoT1h2x1C4di5faf"
 image1: https://ucarecdn.com/efcfa990-fcb5-4a76-85f9-7cd8bb39df4c/
 image2: https://ucarecdn.com/f9b468ca-b1b2-461f-8a6e-31da2029920b/
 image3: https://ucarecdn.com/deb6a54a-c7ba-41d4-ab24-4669e23a2a08/

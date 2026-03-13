@@ -27,6 +27,10 @@ const frames = [
 ];
 
 const initialPrice = sizes[1].price + frames[0].surcharge.md;
+
+const spotifyUrl = frontmatter.spotify
+  ? frontmatter.spotify.replace("open.spotify.com/", "open.spotify.com/embed/")
+  : null;
 ---
 
 <DefaultLayout title={frontmatter.title}>
@@ -80,20 +84,35 @@ const initialPrice = sizes[1].price + frames[0].surcharge.md;
       <!-- Details Column -->
       <div class="w-full lg:w-[40%]">
         
-        <div class="mb-16">
+        <div class="mb-10">
           <nav class="flex items-center text-overline text-text-muted mb-6 space-x-3">
             <a href="/paintings" class="hover:text-accent transition-colors">Exhibition</a>
             <span class="w-4 h-px bg-border"></span>
             <span class="text-accent">{frontmatter.title}</span>
           </nav>
-          <h1 class="text-5xl md:text-6xl font-heading mb-8 leading-tight">{frontmatter.title}</h1>
-          <div class="w-16 h-px bg-border mb-8"></div>
+          <h1 class="text-5xl md:text-6xl font-heading mb-6 leading-tight">{frontmatter.title}</h1>
+          <div class="w-16 h-px bg-border mb-6"></div>
           <p class="font-body text-sm md:text-base text-text-muted leading-loose font-light">
             {frontmatter.description}
           </p>
         </div>
 
-        <div class="bg-white border border-border p-8 md:p-12 space-y-12">
+        {spotifyUrl && (
+          <div class="mb-8">
+            <label class="block text-overline text-text-muted mb-3">Studio Accompaniment</label>
+            <iframe
+              src={spotifyUrl + "?utm_source=generator&theme=0"}
+              width="100%"
+              height="80"
+              frameborder="0"
+              allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
+              loading="lazy"
+              style="border-radius: 12px;"
+            ></iframe>
+          </div>
+        )}
+
+        <div class="bg-white border border-border p-8 md:p-10 space-y-8">
           
           <!-- Size -->
           <div class="space-y-4">
@@ -145,8 +164,8 @@ const initialPrice = sizes[1].price + frames[0].surcharge.md;
           </div>
 
           <!-- Total & Action -->
-          <div class="pt-8 border-t border-border mt-12">
-            <div class="flex justify-between items-baseline mb-10">
+          <div class="pt-6 border-t border-border">
+            <div class="flex justify-between items-baseline mb-8">
               <span class="text-overline text-text-muted">Total</span>
               <span class="text-4xl font-heading" id="price-display">${initialPrice}</span>
             </div>
