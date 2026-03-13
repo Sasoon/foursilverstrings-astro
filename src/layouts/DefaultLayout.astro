@@ -8,7 +8,7 @@ import BasicScripts from "@components/BasicScripts.astro";
 const { title, maxWidth = "max-w-7xl" } = Astro.props;
 
 // Don't show the generic header for the homepage or individual painting layouts (they handle their own headers)
-const showHeader = title && title !== "Four Silver Strings" && Astro.url.pathname !== "/paintings" && !Astro.url.pathname.includes("/paintings/");
+const showHeader = title && title !== "Four Silver Strings" && Astro.url.pathname !== "/paintings" && !Astro.url.pathname.includes("/paintings/") && Astro.url.pathname !== "/success";
 ---
 
 <!doctype html>
