@@ -151,10 +151,11 @@ const initialPrice = sizes[1].price + frames[0].surcharge.md;
               <span class="text-4xl font-heading" id="price-display">${initialPrice}</span>
             </div>
             
-            <button type="button" class="btn-primary w-full" id="add-to-cart" disabled>
+            <button type="button" class="btn-primary w-full" id="add-to-cart">
               Acquire Piece
             </button>
-            <p class="text-center text-xs text-accent mt-6 font-medium tracking-wide">Acquisition unavailable at this time.</p>
+            <p class="text-center text-xs text-text-muted mt-6 font-medium tracking-wide hidden" id="checkout-status"></p>
+            <div id="painting-data" class="hidden" data-title={frontmatter.title} data-image={images[0]} data-url={`/paintings/${frontmatter.identifier}`}></div>
           </div>
           
         </div>
@@ -246,6 +247,62 @@ const initialPrice = sizes[1].price + frames[0].surcharge.md;
       }
 
       updatePrice();
+
+      const cartBtn = document.querySelector<HTMLButtonElement>("#add-to-cart");
+      const statusEl = document.querySelector<HTMLParagraphElement>("#checkout-status");
+      const paintingData = document.querySelector<HTMLElement>("#painting-data");
+
+      if (cartBtn && paintingData) {
+        cartBtn.addEventListener("click", async () => {
+          const sizeBtn = document.querySelector<HTMLButtonElement>("#size-selector button.bg-text");
+          if (!sizeBtn || !frameSelector || !qtyInput) return;
+
+          const size = sizeBtn.textContent?.trim() || "";
+          const basePrice = parseInt(sizeBtn.dataset.price || "0");
+          const sizeKey = sizeBtn.dataset.size || "md";
+          const opt = frameSelector.selectedOptions[0];
+          const surchargeKey = "surcharge" + sizeKey.charAt(0).toUpperCase() + sizeKey.slice(1);
+          const frameSurcharge = parseInt((opt?.dataset as any)[surchargeKey] || "0");
+          const frame = frameSelector.value;
+          const quantity = Math.max(1, parseInt(qtyInput.value) || 1);
+          const unitPrice = basePrice + frameSurcharge;
+
+          cartBtn.disabled = true;
+          cartBtn.textContent = "Processing\u2026";
+          if (statusEl) { statusEl.textContent = ""; statusEl.classList.add("hidden"); }
+
+          try {
+            const res = await fetch("/api/checkout", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify({
+                title: paintingData.dataset.title,
+                price: unitPrice,
+                quantity,
+                size,
+                frame,
+                image: paintingData.dataset.image,
+                cancelUrl: paintingData.dataset.url,
+              }),
+            });
+
+            const data = await res.json();
+
+            if (data.url) {
+              window.location.href = data.url;
+            } else {
+              throw new Error(data.error || "Checkout failed");
+            }
+          } catch {
+            cartBtn.disabled = false;
+            cartBtn.textContent = "Acquire Piece";
+            if (statusEl) {
+              statusEl.textContent = "Something went wrong. Please try again.";
+              statusEl.classList.remove("hidden");
+            }
+          }
+        });
+      }
     }
 
     document.addEventListener("astro:page-load", initPaintingPage);
